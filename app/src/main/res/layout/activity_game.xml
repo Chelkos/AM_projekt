@@ -23,14 +23,14 @@
 
             <Button
                 android:id="@+id/answerAButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Answer A" />
 
             <Button
                 android:id="@+id/answerBButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Answer B" />
@@ -68,13 +68,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/feedbackText"
-        android:layout_width="159dp"
-        android:layout_height="56dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionText"
-        app:layout_constraintVertical_bias="0.08" />
 </androidx.constraintlayout.widget.ConstraintLayout>

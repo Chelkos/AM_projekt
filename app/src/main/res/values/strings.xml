@@ -1,26 +1,25 @@
 <resources>
     <string name="app_name">AMProjekt</string>
     <string-array name="questions">
-        <item>Która figura w szachach ma prawo wykonać en passant - tzw. bicie w przelocie?</item>
+        <item>Która figura w szachach ma prawo wykonać en passant - tzw. "bicie w przelocie"?</item>
         <item>Kto jest głównym bohaterem książki J.K. Rowling pt. "Harry Potter i kamień filozoficzny"?</item>
         <item>Jak miał na imię jedyny przyjaciel z dzieciństwa Dundersztyca - antagonisty serii "Fineasz i Ferb"?</item>
-        <item>Jaki jest tytuł piosenki śpiewanej przez Macieja Maleńczuka w bajce Disneya pt. "Vaiana"</item>
-        <item>Jak nazywa się protagonista serii "Piraci z Karaibów"?</item>
-        <item>Jak ma na imię postać z popularnej gry "League of Legends" będąca grabarzem?</item>
+        <item>Jaką piosenkę śpiewał Maciej Maleńczuk w bajce Disneya pt. "Vaiana"?</item>
+        <item>Jak nazywa się aktor grający głównego bohatera serii "Piraci z Karaibów"?</item>
+        <item>Jak ma na imię postać z popularnej gry "League of Legends", będąca grabarzem?</item>
         <item>Do jakiej grupy pierwiastków zaliczany jest wodór?</item>
-        <item>Kto napisał pozytywistyczną powieść pt. "Lalka"?</item>
-        <item>Jakiej narodowości był człowiek który wymyślił długopis kulkowy?</item>
-        <item>Jak ma na imię najstarsza córka prezydenta Rosji - Vladimira Putina?</item>
+        <item>Kto napisał powieść epoki pozytywizmu pt. "Lalka"?</item>
+        <item>Jakiej narodowości był człowiek, który wymyślił długopis kulkowy?</item>
+        <item>Jak ma na imię najstarsza córka prezydenta Rosji Vladimira Putina?</item>
     </string-array>
     <string-array name="answers">
-
         <item>Pion ; Skoczek ; Król ; Hetman</item>
         <item>Harry Potter ; Hermiona Granger ; Ron Weasley ; Severus Snape</item>
         <item>Balunio ; Tomas Dłonias ; Norm ; Sąsiad Kenny</item>
         <item>Błyszczeć ; Drobnostka ; Pół kroku stąd ; Na drodze tej</item>
         <item>Jack Sparrow ; Barbossa ; Elizabeth Swan ; Will Turner</item>
         <item>Yorick ; Udyr ; Yasuo ; Irelia</item>
-        <item>Niemetale ; Gazy szlachetne ; Metale ; Halogeny</item>
+        <item>Niemetale ; Gazy szlachetne ; Metale ; Halogenki</item>
         <item>Bolesław Prus ; Stanisław Wokulski ; Eliza Orzeszkowa ; Stanisław Wyspiański</item>
         <item>Węgierskiej ; Polskiej ; Austriackiej ; Włoskiej</item>
         <item>Yekaterina ; Maria ; Barbora ; Sasha</item>
