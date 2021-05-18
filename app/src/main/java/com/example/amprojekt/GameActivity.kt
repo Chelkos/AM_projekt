@@ -12,6 +12,7 @@ import java.util.*
 
 class GameActivity : AppCompatActivity() {
 
+    //unused comment
     private var stage = 0
     private var helpAvailable = true
     lateinit var questionsIndexes : List<Int>
