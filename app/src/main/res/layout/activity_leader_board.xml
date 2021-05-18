@@ -7,7 +7,7 @@
     tools:context=".LeaderBoardActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/titleView"
         android:layout_width="313dp"
         android:layout_height="51dp"
         android:text="CURRENT LEADERS"
@@ -20,10 +20,11 @@
         app:layout_constraintVertical_bias="0.117" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/highScores"
         android:layout_width="322dp"
         android:layout_height="528dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/titleView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

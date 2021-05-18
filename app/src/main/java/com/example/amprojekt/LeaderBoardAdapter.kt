@@ -3,20 +3,13 @@ package com.example.amprojekt
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import room.HighscoreItem
 
-class LeaderBoardAdapter(input : List<String>) : RecyclerView.Adapter<LeaderBoardAdapter.ViewHolder>() {
-
-    private lateinit var data : List<PlayerRecord>
+class LeaderBoardAdapter(private var data : MutableList<HighscoreItem>) : RecyclerView.Adapter<LeaderBoardAdapter.ViewHolder>() {
 
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
 
     }
-
-    data class PlayerRecord(
-        val nick : String,
-        val date : Long,
-        val result : Int
-    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         TODO("Not yet implemented")

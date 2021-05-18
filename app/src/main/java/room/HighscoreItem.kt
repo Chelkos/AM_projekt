@@ -1,4 +1,4 @@
-package com.example.amprojekt;
+package room;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
