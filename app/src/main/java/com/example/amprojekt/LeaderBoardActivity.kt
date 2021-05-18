@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import room.HighscoreItem
+import java.time.format.DateTimeFormatter
 
 class LeaderBoardActivity : AppCompatActivity() {
 
