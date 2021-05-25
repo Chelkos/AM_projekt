@@ -9,7 +9,7 @@ data class HighscoreItem (
     @PrimaryKey (autoGenerate = true)
     val uid : Int,
     @ColumnInfo(name = "player_name")
-     val name:  String?,
+    val name:  String?,
     @ColumnInfo(name = "player_highscore")
     val  highscore: Int,
     @ColumnInfo(name = "date")

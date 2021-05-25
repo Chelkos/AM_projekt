@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import room.HighscoreItem
-import java.time.format.DateTimeFormatter
 
 class LeaderBoardActivity : AppCompatActivity() {
 
@@ -15,19 +14,23 @@ class LeaderBoardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leader_board)
-        adapter = LeaderBoardAdapter(dummyData()) //loadScoresFromDB()
+        adapter = LeaderBoardAdapter()
         val recycler = findViewById<RecyclerView>(R.id.highScores)
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter
         recycler.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
     }
 
-    /*fun loadScoresFromDB() : MutableList<HighscoreItem> {
+    companion object {
 
-    }*/
+        fun loadFromDB() : MutableList<HighscoreItem> {
+            return MainActivity.gameDao.getAll()
+        }
 
-    fun dummyData() : MutableList<HighscoreItem> {
-        return MutableList(6) {i -> HighscoreItem(i, "Player $i", i, 0) }
+        fun removeItem(item : HighscoreItem) {
+            MainActivity.gameDao.deleteScore(item)
+        }
+
     }
 
 }

@@ -12,7 +12,6 @@ import java.util.*
 
 class GameActivity : AppCompatActivity() {
 
-    //unused comment
     private var stage = 0
     private var helpAvailable = true
     lateinit var questionsIndexes : List<Int>
@@ -45,11 +44,8 @@ class GameActivity : AppCompatActivity() {
                     loadStage()
                 } else {
                     messageView.text = "WYGRANA"
-                    intent = Intent()
-                    intent.putExtra("score", 10)
-                    setResult(1, intent)
                     Handler().postDelayed({
-                        finish()
+                        endGame(10)
                     }, 3*1000)
                 }
             } else if(text != "") {
@@ -57,11 +53,8 @@ class GameActivity : AppCompatActivity() {
                 Handler().postDelayed({
                     messageView.text = "KONIEC GRY"
                 }, 1*1000)
-                intent = Intent()
-                intent.putExtra("score", stage - 1)
-                setResult(1, intent)
                 Handler().postDelayed({
-                    finish()
+                    endGame(stage - 1)
                                       }, 3*1000)
                 buttonArray.forEach { it.setOnClickListener {  } }
             }
@@ -121,6 +114,13 @@ class GameActivity : AppCompatActivity() {
             }
             if(c == 0) break
         }
+    }
+
+    private fun endGame(score : Int) {
+        intent = Intent()
+        intent.putExtra("score", score)
+        setResult(1, intent)
+        finish()
     }
 
 }
