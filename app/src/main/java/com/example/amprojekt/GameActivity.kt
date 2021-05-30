@@ -24,7 +24,7 @@ class GameActivity : AppCompatActivity() {
     lateinit var shuffledAnswers : List<String>
     lateinit var buttonArray : Array<Button>
     lateinit var messageView : TextView
-
+    private var flag = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
@@ -65,10 +65,62 @@ class GameActivity : AppCompatActivity() {
             helpAvailable = false
             it.setOnClickListener { }
         }
-        getQuestions()
-        loadStage()
-    }
+        if(savedInstanceState!=null)
+        {
+            Log.d("S","Odczytano")
+            if(savedInstanceState.getStringArray("CHOSEN_QUESTIONS")!=null)
+            {
+                chosenQuestions = savedInstanceState.getStringArray("CHOSEN_QUESTIONS")!!
 
+            }
+            if(savedInstanceState.getInt("CURRENT_STAGE")!=null)
+            {
+                stage = savedInstanceState.getInt("CURRENT_STAGE") -1
+
+            }
+            if( savedInstanceState.getStringArray("CHOSEN_ANSWERS")!=null)
+            {
+                chosenAnswers = savedInstanceState.getStringArray("CHOSEN_ANSWERS")!!
+
+            }
+            if(savedInstanceState.getBoolean("HELP_AVAILABLE")!=null)
+            {
+                helpAvailable=savedInstanceState.getBoolean("HELP_AVAILABLE")
+
+            }
+            shuffleAnswers(chosenAnswers[stage])
+            if(savedInstanceState.getString("CURRENT_CORRECT_ANSWER")!=null)
+            {
+                correctAnswer=savedInstanceState.getString("CURRENT_CORRECT_ANSWER")!!
+
+            }
+            flag =1;
+
+
+        }
+
+
+
+
+    }
+    override fun onStart() {
+        super.onStart()
+
+        if(flag ==1)
+        {
+            Log.d("S","Sprawdzono flagę"+flag)
+            questionText.text = chosenQuestions[stage]
+            buttonArray.forEachIndexed { index, button -> button.text = shuffledAnswers[index] }
+            flag =0
+
+        }
+        else
+        {
+            getQuestions()
+            loadStage()
+        }
+
+    }
     private fun shuffleAnswers(answers: String) {
         shuffledAnswers = ArrayList()
         val words = answers.split(";").toTypedArray()
@@ -122,5 +174,19 @@ class GameActivity : AppCompatActivity() {
         setResult(1, intent)
         finish()
     }
+    override fun onSaveInstanceState(outState: Bundle){
+        super.onSaveInstanceState(outState)
+        Log.d("S","Zapisano" )
+        outState.putStringArray("CHOSEN_ANSWERS",chosenAnswers)
+        outState.putStringArray("CHOSEN_QUESTIONS",chosenQuestions)
 
+        outState.putString("CURRENT_CORRECT_ANSWER",correctAnswer)
+        outState.putBoolean("HELP_AVAILABLE",helpAvailable)
+        outState.putInt("CURRENT_STAGE",stage)
+    }
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+
+
+
+    }
 }
