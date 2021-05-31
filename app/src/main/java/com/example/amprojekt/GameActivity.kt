@@ -83,7 +83,6 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun shuffleAnswers(answers: String) {
-        //shuffledAnswers = ArrayList()
         val words = answers.split(";")
         shuffledAnswers = words as ArrayList<String>
         correctAnswer = words[0]
@@ -97,7 +96,6 @@ class GameActivity : AppCompatActivity() {
         Collections.shuffle(questionsIndexes)
         chosenQuestions = Array(10) {i -> allQuestions[questionsIndexes[i]] }
         chosenAnswers = Array(10) {i -> allAnswers[questionsIndexes[i]] }
-        //shuffleAnswers(chosenAnswers[0])
     }
 
     private fun loadStage(shuffle : Boolean) {
