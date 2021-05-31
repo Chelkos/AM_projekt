@@ -6,89 +6,93 @@
     android:layout_height="match_parent"
     tools:context=".GameActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="wrap_content"
-        android:layout_height="294dp"
-        android:orientation="vertical"
+    <TextView
+        android:id="@+id/questionText"
+        android:layout_width="551dp"
+        android:layout_height="224dp"
+        android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.032" />
 
-        <TextView
-            android:id="@+id/questionText"
+    <TextView
+        android:id="@+id/messageView"
+        android:layout_width="334dp"
+        android:layout_height="53dp"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionText"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="472dp"
+        android:layout_height="115dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionText"
+        app:layout_constraintVertical_bias="0.84000003">
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="147dp"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/messageView"
-            android:layout_width="match_parent"
-            android:layout_height="61dp"
-            android:textAlignment="center"
-            android:textSize="30sp" />
-
-        <TableLayout
-            android:id="@+id/tableLayout"
-            android:layout_width="400dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="0dp">
+            android:layout_weight="1">
 
-            <TableRow
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/answerAButton"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:text="Answer A" />
 
-                <Button
-                    android:id="@+id/answerAButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Answer A" />
-
-                <Button
-                    android:id="@+id/answerBButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Answer B" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/answerBButton"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:text="Answer B" />
+        </TableRow>
 
-                <Button
-                    android:id="@+id/answerCButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Answer C" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-                <Button
-                    android:id="@+id/answerDButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Answer D" />
-            </TableRow>
+            <Button
+                android:id="@+id/answerCButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Answer C" />
 
-        </TableLayout>
-    </LinearLayout>
+            <Button
+                android:id="@+id/answerDButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Answer D" />
+        </TableRow>
+
+    </TableLayout>
 
     <Button
         android:id="@+id/removeAnswersButton"
         android:layout_width="83dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:text="50/50"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
-        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.024"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.705" />
+        app:layout_constraintTop_toBottomOf="@+id/messageView"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
