@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import java.util.*
@@ -14,17 +13,19 @@ class GameActivity : AppCompatActivity() {
 
     private var stage = 0
     private var helpAvailable = true
+
+    lateinit var questionText : TextView
+    lateinit var messageView : TextView
+    lateinit var buttonArray : Array<Button>
+
     lateinit var questionsIndexes : List<Int>
     lateinit var allQuestions : Array<String>
     lateinit var allAnswers : Array<String>
     lateinit var chosenQuestions : Array<String>
     lateinit var chosenAnswers : Array<String>
     lateinit var correctAnswer : String
-    lateinit var questionText : TextView
-    lateinit var shuffledAnswers : List<String>
-    lateinit var buttonArray : Array<Button>
-    lateinit var messageView : TextView
-    private var flag = 0
+    lateinit var shuffledAnswers : ArrayList<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
@@ -41,7 +42,7 @@ class GameActivity : AppCompatActivity() {
                     Handler().postDelayed({
                         messageView.text = ""
                     }, 1*1000)
-                    loadStage()
+                    loadStage(true)
                 } else {
                     messageView.text = "WYGRANA"
                     Handler().postDelayed({
@@ -65,69 +66,28 @@ class GameActivity : AppCompatActivity() {
             helpAvailable = false
             it.setOnClickListener { }
         }
-        if(savedInstanceState!=null)
-        {
-            Log.d("S","Odczytano")
-            if(savedInstanceState.getStringArray("CHOSEN_QUESTIONS")!=null)
-            {
-                chosenQuestions = savedInstanceState.getStringArray("CHOSEN_QUESTIONS")!!
-
+        if(savedInstanceState != null) {
+            savedInstanceState.apply {
+                chosenAnswers = getStringArray("CHOSEN_ANSWERS")!!
+                chosenQuestions = getStringArray("CHOSEN_QUESTIONS")!!
+                correctAnswer = getString("CURRENT_CORRECT_ANSWER")!!
+                shuffledAnswers = getStringArrayList("SHUFFLED_ANSWERS")!!
+                helpAvailable = getBoolean("HELP_AVAILABLE")
+                stage = getInt("CURRENT_STAGE") - 1
             }
-            if(savedInstanceState.getInt("CURRENT_STAGE")!=null)
-            {
-                stage = savedInstanceState.getInt("CURRENT_STAGE") -1
-
-            }
-            if( savedInstanceState.getStringArray("CHOSEN_ANSWERS")!=null)
-            {
-                chosenAnswers = savedInstanceState.getStringArray("CHOSEN_ANSWERS")!!
-
-            }
-            if(savedInstanceState.getBoolean("HELP_AVAILABLE")!=null)
-            {
-                helpAvailable=savedInstanceState.getBoolean("HELP_AVAILABLE")
-
-            }
-            shuffleAnswers(chosenAnswers[stage])
-            if(savedInstanceState.getString("CURRENT_CORRECT_ANSWER")!=null)
-            {
-                correctAnswer=savedInstanceState.getString("CURRENT_CORRECT_ANSWER")!!
-
-            }
-            flag =1;
-
-
-        }
-
-
-
-
-    }
-    override fun onStart() {
-        super.onStart()
-
-        if(flag ==1)
-        {
-            Log.d("S","Sprawdzono flagę"+flag)
-            questionText.text = chosenQuestions[stage]
-            buttonArray.forEachIndexed { index, button -> button.text = shuffledAnswers[index] }
-            flag =0
-
-        }
-        else
-        {
+            loadStage(false)
+        } else {
             getQuestions()
-            loadStage()
+            loadStage(true)
         }
-
     }
+
     private fun shuffleAnswers(answers: String) {
-        shuffledAnswers = ArrayList()
-        val words = answers.split(";").toTypedArray()
-        Log.d("T", "" + words[0])
-        shuffledAnswers = listOf(*words)
+        //shuffledAnswers = ArrayList()
+        val words = answers.split(";")
+        shuffledAnswers = words as ArrayList<String>
         correctAnswer = words[0]
-        Collections.shuffle(shuffledAnswers)
+        shuffledAnswers.shuffle()
     }
 
     private fun getQuestions() {
@@ -137,11 +97,13 @@ class GameActivity : AppCompatActivity() {
         Collections.shuffle(questionsIndexes)
         chosenQuestions = Array(10) {i -> allQuestions[questionsIndexes[i]] }
         chosenAnswers = Array(10) {i -> allAnswers[questionsIndexes[i]] }
-        shuffleAnswers(chosenAnswers[0])
+        //shuffleAnswers(chosenAnswers[0])
     }
 
-    private fun loadStage() {
-        shuffleAnswers(chosenAnswers[stage])
+    private fun loadStage(shuffle : Boolean) {
+        if(shuffle) {
+            shuffleAnswers(chosenAnswers[stage])
+        }
         questionText.text = chosenQuestions[stage]
         buttonArray.forEachIndexed { index, button -> button.text = shuffledAnswers[index] }
         stage++
@@ -174,19 +136,17 @@ class GameActivity : AppCompatActivity() {
         setResult(1, intent)
         finish()
     }
+
     override fun onSaveInstanceState(outState: Bundle){
         super.onSaveInstanceState(outState)
-        Log.d("S","Zapisano" )
-        outState.putStringArray("CHOSEN_ANSWERS",chosenAnswers)
-        outState.putStringArray("CHOSEN_QUESTIONS",chosenQuestions)
-
-        outState.putString("CURRENT_CORRECT_ANSWER",correctAnswer)
-        outState.putBoolean("HELP_AVAILABLE",helpAvailable)
-        outState.putInt("CURRENT_STAGE",stage)
+        outState.apply {
+            putStringArray("CHOSEN_ANSWERS",chosenAnswers)
+            putStringArray("CHOSEN_QUESTIONS",chosenQuestions)
+            putString("CURRENT_CORRECT_ANSWER",correctAnswer)
+            putStringArrayList("SHUFFLED_ANSWERS", shuffledAnswers)
+            putBoolean("HELP_AVAILABLE",helpAvailable)
+            putInt("CURRENT_STAGE",stage)
+        }
     }
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
 
-
-
-    }
 }

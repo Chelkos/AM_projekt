@@ -3,6 +3,7 @@ package com.example.amprojekt
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -24,7 +25,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         resultView = findViewById(R.id.resultView)
-        resultView.text = ""
+        if(savedInstanceState != null) {
+            savedInstanceState.apply {
+                resultView.text = getString("RESULT_TEXT")
+                name = getString("NAME")!!
+            }
+        } else {
+            resultView.text = ""
+        }
         val newGameButton = findViewById<Button>(R.id.newgameBut)
         val leaderButton = findViewById<Button>(R.id.leaderBut)
         val exitButton = findViewById<Button>(R.id.exitBut)
@@ -43,7 +51,6 @@ class MainActivity : AppCompatActivity() {
                 val text = nameInput.text.toString()
                 if(text != "") {
                     name = text
-                    Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT).show()
                     val intent = Intent(applicationContext, GameActivity::class.java)
                     startActivityForResult(intent, 1)
                 } else {
@@ -78,12 +85,20 @@ class MainActivity : AppCompatActivity() {
             } else {
                 resultView.text = "You won!"
             }
-            var item = HighscoreItem(0, name, score, Date().time)
+            val item = HighscoreItem(0, name, score, Date().time)
             if(gameDao.getPlayer(name).isEmpty()) {
                 gameDao.insertNewPlayer(item)
             } else {
                 gameDao.updateScore(name, score, System.currentTimeMillis())
             }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.apply {
+            putString("NAME", name)
+            putString("RESULT_TEXT", resultView.text.toString())
         }
     }
 
