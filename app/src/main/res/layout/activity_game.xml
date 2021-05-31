@@ -94,4 +94,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/messageView" />
 
+    <ProgressBar
+        android:id="@+id/timer"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="186dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.446"
+        app:layout_constraintStart_toEndOf="@+id/removeAnswersButton"
+        app:layout_constraintTop_toBottomOf="@+id/messageView"
+        app:layout_constraintVertical_bias="0.395" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

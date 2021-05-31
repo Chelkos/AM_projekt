@@ -4,20 +4,26 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 import java.util.*
 
 class GameActivity : AppCompatActivity() {
 
     private var stage = 0
     private var helpAvailable = true
+    private var timeLeft : Long = 10000
 
+
+    lateinit var countDown : CountDownTimer
     lateinit var questionText : TextView
     lateinit var messageView : TextView
     lateinit var buttonArray : Array<Button>
-
+    lateinit var timer : ProgressBar
     lateinit var questionsIndexes : List<Int>
     lateinit var allQuestions : Array<String>
     lateinit var allAnswers : Array<String>
@@ -33,11 +39,18 @@ class GameActivity : AppCompatActivity() {
         messageView = findViewById(R.id.messageView)
         buttonArray = arrayOf(findViewById(R.id.answerAButton), findViewById(R.id.answerBButton), findViewById(R.id.answerCButton),
                 findViewById(R.id.answerDButton))
+        timer = findViewById(R.id.timer)
+
+
+
         val listener = View.OnClickListener { it ->
             val button = it as Button
             val text = button.text
+
+            countDown.cancel()
             if (text == correctAnswer) {
                 if(stage < 10) {
+
                     messageView.text = "Dobrze!"
                     Handler().postDelayed({
                         messageView.text = ""
@@ -59,6 +72,8 @@ class GameActivity : AppCompatActivity() {
                                       }, 3*1000)
                 buttonArray.forEach { it.setOnClickListener {  } }
             }
+
+
         }
         buttonArray.forEach { it.setOnClickListener(listener) }
         findViewById<Button>(R.id.removeAnswersButton).setOnClickListener {
@@ -66,6 +81,8 @@ class GameActivity : AppCompatActivity() {
             helpAvailable = false
             it.setOnClickListener { }
         }
+
+
         if(savedInstanceState != null) {
             savedInstanceState.apply {
                 chosenAnswers = getStringArray("CHOSEN_ANSWERS")!!
@@ -74,6 +91,7 @@ class GameActivity : AppCompatActivity() {
                 shuffledAnswers = getStringArrayList("SHUFFLED_ANSWERS")!!
                 helpAvailable = getBoolean("HELP_AVAILABLE")
                 stage = getInt("CURRENT_STAGE") - 1
+                timeLeft = getLong("TIME_LEFT")
             }
             loadStage(false)
         } else {
@@ -83,7 +101,6 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun shuffleAnswers(answers: String) {
-        //shuffledAnswers = ArrayList()
         val words = answers.split(";")
         shuffledAnswers = words as ArrayList<String>
         correctAnswer = words[0]
@@ -97,13 +114,33 @@ class GameActivity : AppCompatActivity() {
         Collections.shuffle(questionsIndexes)
         chosenQuestions = Array(10) {i -> allQuestions[questionsIndexes[i]] }
         chosenAnswers = Array(10) {i -> allAnswers[questionsIndexes[i]] }
-        //shuffleAnswers(chosenAnswers[0])
     }
 
-    private fun loadStage(shuffle : Boolean) {
-        if(shuffle) {
+    private fun loadStage(nextStage : Boolean) {
+      var countdownInterval : Long = 150
+        timer.setProgress(((timer.max-timer.min)*(timeLeft.toFloat()/10000)).toInt())
+        if(nextStage) {
+            timeLeft = 10000
             shuffleAnswers(chosenAnswers[stage])
         }
+
+        countDown =   object:CountDownTimer(timeLeft, countdownInterval){
+
+            override fun onTick(millisUntilFinished: Long) {
+                timeLeft = timeLeft - countdownInterval
+                Log.d("PB",""+((timer.max-timer.min)*(timeLeft.toFloat()/10000)).toInt())
+                timer.setProgress(((timer.max-timer.min)*(timeLeft.toFloat()/10000)).toInt())
+            }
+
+            override fun onFinish() {
+                Log.d("PB","FINISH ")
+                timer.setProgress(timer.min)
+                messageView.text = "KONIEC CZASU!"
+                endGame(stage-1)
+            }
+        }.start()
+
+
         questionText.text = chosenQuestions[stage]
         buttonArray.forEachIndexed { index, button -> button.text = shuffledAnswers[index] }
         stage++
@@ -139,6 +176,7 @@ class GameActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle){
         super.onSaveInstanceState(outState)
+        countDown.cancel()
         outState.apply {
             putStringArray("CHOSEN_ANSWERS",chosenAnswers)
             putStringArray("CHOSEN_QUESTIONS",chosenQuestions)
@@ -146,6 +184,7 @@ class GameActivity : AppCompatActivity() {
             putStringArrayList("SHUFFLED_ANSWERS", shuffledAnswers)
             putBoolean("HELP_AVAILABLE",helpAvailable)
             putInt("CURRENT_STAGE",stage)
+            putLong("TIME_LEFT",timeLeft)
         }
     }
 
