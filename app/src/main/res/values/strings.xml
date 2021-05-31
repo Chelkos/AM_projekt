@@ -12,7 +12,14 @@
         <item>Jakiej narodowości był człowiek, który wymyślił długopis kulkowy?</item>
         <item>Jak ma na imię najstarsza córka prezydenta Rosji Vladimira Putina?</item>
         <item>Jak miała na imię postać zamrożona w karbonicie w serii filmów "Star Wars"?</item>
-
+        <item>Jak nazywa się najdłuższa rzeka świata?</item>
+        <item>Które państwo nie brało udziału w drugim rozbiorze Polski?</item>
+        <item>Jak nazywają się bohaterowie czechosłowackiego serialu animowanego pt. "Sąsiedzi"</item>
+        <item>Jaki związek chemiczny uzyskamy po spaleniu wodoru?</item>
+        <item>Jaki film wyprodukowany w 2009 roku został okrzyknięty najlepiej zarabiającym filmem w historii? </item>
+        <item>Ile jest napisanych części dramatu "Dziady" Adama Mickiewicza?</item>
+        <item>Jaka gra wypuszczona w 2011 roku przez niezależne studio Mojang stała się klasykiem w świecie gier?</item>
+        <item>Czyj wizerunek odnajdziemy na banknocie 10 dolarowym (USD)?</item>
     </string-array>
     <string-array name="answers">
         <item>Pion ; Skoczek ; Król ; Hetman</item>
@@ -26,5 +33,14 @@
         <item>Węgierskiej ; Polskiej ; Austriackiej ; Włoskiej</item>
         <item>Yekaterina ; Maria ; Barbora ; Sasha</item>
         <item>Han Solo ; Luke Skywalker ; Chewbacca ; Darth Vader</item>
+        <item>Amazonka ; Nil ; Wisła ; Styks</item>
+        <item>Austria ; Prusy ; Rosja ; Każde z wymienionych</item>
+        <item>Mat i Pat ; Tom i Jerry ; Misza i niedźwiedź ; Kacper i Roman</item>
+        <item>Oksydan ; Glicerynę ; Nitroglicerynę ; Żadne z powyższych</item>
+        <item>Avatar ; Avengers: Endgame ; Titanic ; Smoleńsk</item>
+        <item>Trzy ; Cztery ; Dwa ; Pięć</item>
+        <item>Minecraft ; Terraria ; Warcraft ; Dota</item>
+        <item>Aleksandra Hamiltona ; Thomasa Jeffersona ; Georga Washingtona ; Benjamina Franklina</item>
+
     </string-array>
 </resources>
