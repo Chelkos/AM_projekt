@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AMProjekt</string>
+    <string name="app_name">QuizApp</string>
     <string-array name="questions">
         <item>Która figura w szachach ma prawo wykonać en passant - tzw. "bicie w przelocie"?</item>
         <item>Kto jest głównym bohaterem książki J.K. Rowling pt. "Harry Potter i kamień filozoficzny"?</item>

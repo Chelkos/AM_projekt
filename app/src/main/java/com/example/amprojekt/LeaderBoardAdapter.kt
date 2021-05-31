@@ -6,17 +6,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import room.HighscoreItem
-import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
-class LeaderBoardAdapter : RecyclerView.Adapter<LeaderBoardAdapter.ViewHolder>() {
+class LeaderBoardAdapter(private var data : MutableList<HighscoreItem>) : RecyclerView.Adapter<LeaderBoardAdapter.ViewHolder>() {
 
-    private var data : MutableList<HighscoreItem> = LeaderBoardActivity.loadFromDB()
     private val dateFormat = SimpleDateFormat("HH:mm dd-MM-yyyy", Locale.GERMANY)
+
+    init {
+        sortByScore()
+    }
 
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         val playerText : TextView = view.findViewById(R.id.player)
@@ -46,5 +45,9 @@ class LeaderBoardAdapter : RecyclerView.Adapter<LeaderBoardAdapter.ViewHolder>()
     }
 
     override fun getItemCount() = data.size
+
+    fun getData() = data
+
+    private fun sortByScore() = data.sortByDescending { it.highscore }
 
 }
