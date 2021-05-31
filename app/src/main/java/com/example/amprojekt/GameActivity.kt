@@ -49,24 +49,24 @@ class GameActivity : AppCompatActivity() {
             if (text == correctAnswer) {
                 if(stage < 10) {
                     messageView.text = "Dobrze!"
-                    Handler().postDelayed({
+                    Handler(mainLooper).postDelayed({
                         messageView.text = ""
                     }, 1*1000)
                     stage++
                     loadStage(true)
                 } else {
                     messageView.text = "WYGRANA"
-                    Handler().postDelayed({
+                    Handler(mainLooper).postDelayed({
                         endGame(10)
                     }, 3*1000)
                 }
             } else if(text != "") {
                 timer.animation = null
                 messageView.text = "Źle!"
-                Handler().postDelayed({
+                Handler(mainLooper).postDelayed({
                     messageView.text = "KONIEC GRY"
                 }, 1*1000)
-                Handler().postDelayed({
+                Handler(mainLooper).postDelayed({
                     endGame(stage)
                                       }, 3*1000)
                 buttonArray.forEach { it.setOnClickListener {  } }
