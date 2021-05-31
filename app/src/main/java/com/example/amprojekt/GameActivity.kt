@@ -8,6 +8,8 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.Transformation
 import android.widget.Button
 import android.widget.ProgressBar
 import java.util.*
@@ -16,10 +18,8 @@ class GameActivity : AppCompatActivity() {
 
     private var stage = 0
     private var helpAvailable = true
-    private var timeLeft : Long = 10000
+    private var mProgress = 0
 
-
-    lateinit var countDown : CountDownTimer
     lateinit var questionText : TextView
     lateinit var messageView : TextView
     lateinit var buttonArray : Array<Button>
@@ -40,17 +40,15 @@ class GameActivity : AppCompatActivity() {
         buttonArray = arrayOf(findViewById(R.id.answerAButton), findViewById(R.id.answerBButton), findViewById(R.id.answerCButton),
                 findViewById(R.id.answerDButton))
         timer = findViewById(R.id.timer)
-
-
+        timer.min = 0
+        timer.max = TIME_LIMIT.toInt()
 
         val listener = View.OnClickListener { it ->
             val button = it as Button
             val text = button.text
 
-            countDown.cancel()
             if (text == correctAnswer) {
                 if(stage < 10) {
-
                     messageView.text = "Dobrze!"
                     Handler().postDelayed({
                         messageView.text = ""
@@ -63,6 +61,7 @@ class GameActivity : AppCompatActivity() {
                     }, 3*1000)
                 }
             } else if(text != "") {
+                timer.animation = null
                 messageView.text = "Źle!"
                 Handler().postDelayed({
                     messageView.text = "KONIEC GRY"
@@ -72,8 +71,6 @@ class GameActivity : AppCompatActivity() {
                                       }, 3*1000)
                 buttonArray.forEach { it.setOnClickListener {  } }
             }
-
-
         }
         buttonArray.forEach { it.setOnClickListener(listener) }
         findViewById<Button>(R.id.removeAnswersButton).setOnClickListener {
@@ -91,7 +88,7 @@ class GameActivity : AppCompatActivity() {
                 shuffledAnswers = getStringArrayList("SHUFFLED_ANSWERS")!!
                 helpAvailable = getBoolean("HELP_AVAILABLE")
                 stage = getInt("CURRENT_STAGE") - 1
-                timeLeft = getLong("TIME_LEFT")
+                mProgress = getInt("PROGRESS")
             }
             loadStage(false)
         } else {
@@ -117,30 +114,37 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun loadStage(nextStage : Boolean) {
-      var countdownInterval : Long = 150
-        timer.setProgress(((timer.max-timer.min)*(timeLeft.toFloat()/10000)).toInt())
         if(nextStage) {
-            timeLeft = 10000
+            mProgress = timer.max
             shuffleAnswers(chosenAnswers[stage])
         }
+        val anim = object : Animation() {
+            private val initProgress = mProgress
 
-        countDown =   object:CountDownTimer(timeLeft, countdownInterval){
+            override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
+                super.applyTransformation(interpolatedTime, t)
+                val progress = initProgress * (1 - interpolatedTime)
+                mProgress = progress.toInt()
+                timer.progress = mProgress
+            }
+        }
+        anim.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) { }
 
-            override fun onTick(millisUntilFinished: Long) {
-                timeLeft = timeLeft - countdownInterval
-                Log.d("PB",""+((timer.max-timer.min)*(timeLeft.toFloat()/10000)).toInt())
-                timer.setProgress(((timer.max-timer.min)*(timeLeft.toFloat()/10000)).toInt())
+            override fun onAnimationEnd(animation: Animation?) {
+                messageView.text = "CZAS MINĄŁ"
+                Handler().postDelayed({
+                    messageView.text = "KONIEC GRY"
+                }, 1*1000)
+                Handler().postDelayed({
+                    endGame(stage - 1)
+                }, 3*1000)
             }
 
-            override fun onFinish() {
-                Log.d("PB","FINISH ")
-                timer.setProgress(timer.min)
-                messageView.text = "KONIEC CZASU!"
-                endGame(stage-1)
-            }
-        }.start()
-
-
+            override fun onAnimationRepeat(animation: Animation?) { }
+        })
+        anim.duration = mProgress.toLong()
+        timer.startAnimation(anim)
         questionText.text = chosenQuestions[stage]
         buttonArray.forEachIndexed { index, button -> button.text = shuffledAnswers[index] }
         stage++
@@ -176,7 +180,6 @@ class GameActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle){
         super.onSaveInstanceState(outState)
-        countDown.cancel()
         outState.apply {
             putStringArray("CHOSEN_ANSWERS",chosenAnswers)
             putStringArray("CHOSEN_QUESTIONS",chosenQuestions)
@@ -184,8 +187,12 @@ class GameActivity : AppCompatActivity() {
             putStringArrayList("SHUFFLED_ANSWERS", shuffledAnswers)
             putBoolean("HELP_AVAILABLE",helpAvailable)
             putInt("CURRENT_STAGE",stage)
-            putLong("TIME_LEFT",timeLeft)
+            putInt("PROGRESS", mProgress)
         }
+    }
+
+    companion object {
+        const val TIME_LIMIT = 10000L
     }
 
 }
