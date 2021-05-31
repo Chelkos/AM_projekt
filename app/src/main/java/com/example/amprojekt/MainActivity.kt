@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             val nameInput = view.findViewById<EditText>(R.id.player_name)
             setView(view)
             setPositiveButton("OK") { _, _ ->
-                val text = nameInput.text.toString()
+                val text = nameInput.text.toString().trim()
                 if(text != "") {
                     name = text
                     val intent = Intent(applicationContext, GameActivity::class.java)

@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.Handler
 import android.util.Log
 import android.view.View
@@ -53,6 +52,7 @@ class GameActivity : AppCompatActivity() {
                     Handler().postDelayed({
                         messageView.text = ""
                     }, 1*1000)
+                    stage++
                     loadStage(true)
                 } else {
                     messageView.text = "WYGRANA"
@@ -67,7 +67,7 @@ class GameActivity : AppCompatActivity() {
                     messageView.text = "KONIEC GRY"
                 }, 1*1000)
                 Handler().postDelayed({
-                    endGame(stage - 1)
+                    endGame(stage)
                                       }, 3*1000)
                 buttonArray.forEach { it.setOnClickListener {  } }
             }
@@ -87,7 +87,7 @@ class GameActivity : AppCompatActivity() {
                 correctAnswer = getString("CURRENT_CORRECT_ANSWER")!!
                 shuffledAnswers = getStringArrayList("SHUFFLED_ANSWERS")!!
                 helpAvailable = getBoolean("HELP_AVAILABLE")
-                stage = getInt("CURRENT_STAGE") - 1
+                stage = getInt("CURRENT_STAGE")
                 mProgress = getInt("PROGRESS")
             }
             loadStage(false)
@@ -114,10 +114,13 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun loadStage(nextStage : Boolean) {
+        questionText.text = chosenQuestions[stage]
         if(nextStage) {
             mProgress = timer.max
             shuffleAnswers(chosenAnswers[stage])
         }
+        buttonArray.forEachIndexed { index, button -> button.text = shuffledAnswers[index] }
+
         val anim = object : Animation() {
             private val initProgress = mProgress
 
@@ -137,7 +140,7 @@ class GameActivity : AppCompatActivity() {
                     messageView.text = "KONIEC GRY"
                 }, 1*1000)
                 Handler().postDelayed({
-                    endGame(stage - 1)
+                    endGame(stage)
                 }, 3*1000)
             }
 
@@ -145,9 +148,6 @@ class GameActivity : AppCompatActivity() {
         })
         anim.duration = mProgress.toLong()
         timer.startAnimation(anim)
-        questionText.text = chosenQuestions[stage]
-        buttonArray.forEachIndexed { index, button -> button.text = shuffledAnswers[index] }
-        stage++
     }
 
     private fun removeAnswers() {
@@ -181,12 +181,12 @@ class GameActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle){
         super.onSaveInstanceState(outState)
         outState.apply {
-            putStringArray("CHOSEN_ANSWERS",chosenAnswers)
-            putStringArray("CHOSEN_QUESTIONS",chosenQuestions)
-            putString("CURRENT_CORRECT_ANSWER",correctAnswer)
+            putStringArray("CHOSEN_ANSWERS", chosenAnswers)
+            putStringArray("CHOSEN_QUESTIONS", chosenQuestions)
+            putString("CURRENT_CORRECT_ANSWER", correctAnswer)
             putStringArrayList("SHUFFLED_ANSWERS", shuffledAnswers)
-            putBoolean("HELP_AVAILABLE",helpAvailable)
-            putInt("CURRENT_STAGE",stage)
+            putBoolean("HELP_AVAILABLE", helpAvailable)
+            putInt("CURRENT_STAGE", stage)
             putInt("PROGRESS", mProgress)
         }
     }
