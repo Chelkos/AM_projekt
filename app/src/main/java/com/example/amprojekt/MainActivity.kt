@@ -3,13 +3,13 @@ package com.example.amprojekt
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
+import buttons.CustomButton
+import buttons.MenuButton
 import room.HighscoreDao
 import room.HighscoreDatabase
 import kotlin.system.exitProcess
@@ -33,9 +33,9 @@ class MainActivity : AppCompatActivity() {
         } else {
             resultView.text = ""
         }
-        val newGameButton = findViewById<Button>(R.id.newgameBut)
-        val leaderButton = findViewById<Button>(R.id.leaderBut)
-        val exitButton = findViewById<Button>(R.id.exitBut)
+        val newGameButton = findViewById<MenuButton>(R.id.newgameBut)
+        val leaderButton = findViewById<MenuButton>(R.id.leaderBut)
+        val exitButton = findViewById<MenuButton>(R.id.exitBut)
         val db = Room.databaseBuilder(applicationContext, HighscoreDatabase::class.java, "gameDB").allowMainThreadQueries().build()
         gameDao = db.highscoreDao()
 
