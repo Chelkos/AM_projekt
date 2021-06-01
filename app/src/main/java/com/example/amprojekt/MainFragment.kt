@@ -2,12 +2,14 @@ package com.example.amprojekt
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import buttons.MenuButton
@@ -39,6 +41,15 @@ class MainFragment : Fragment() {
         val newGameButton = view!!.findViewById<MenuButton>(R.id.newgameBut)
         val leaderButton = view!!.findViewById<MenuButton>(R.id.leaderBut)
         val exitButton = view!!.findViewById<MenuButton>(R.id.exitBut)
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            var params = view!!.findViewById<LinearLayout>(R.id.buttonList).layoutParams
+            params.width = (params.width * 0.8f).toInt()
+            view!!.findViewById<TextView>(R.id.projectTitle).textSize = 50f
+            newGameButton.changeTextSize(50f)
+            leaderButton.changeTextSize(50f)
+            exitButton.changeTextSize(50f)
+        }
+
 
         val builder: AlertDialog.Builder = let {
             AlertDialog.Builder(context)

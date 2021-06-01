@@ -47,4 +47,9 @@ open class CustomButton(context : Context, attributeSet : AttributeSet) : View(c
         return true
     }
 
+    fun changeTextSize(size : Float) {
+        fontPaint.textSize = size
+        invalidate()
+    }
+
 }

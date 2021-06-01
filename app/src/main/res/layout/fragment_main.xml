@@ -12,6 +12,7 @@
         android:layout_height="100dp"
         android:text="@string/app_name"
         android:textAlignment="center"
+        android:textColor="#BC000000"
         android:textSize="72sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:textColor="#BC000000"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +36,7 @@
         app:layout_constraintVertical_bias="0.083" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/buttonList"
         android:layout_width="367dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
