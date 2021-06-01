@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.Looper.getMainLooper
 import android.view.LayoutInflater
 import android.view.View
@@ -160,10 +161,10 @@ class GameFragment : Fragment(){
 
             override fun onAnimationEnd(animation: Animation?) {
                 messageView.text = "CZAS MINĄŁ"
-                Handler().postDelayed({
+                Handler(getMainLooper()).postDelayed({
                     messageView.text = "KONIEC GRY"
                 }, 1*1000)
-                Handler().postDelayed({
+                Handler(getMainLooper()).postDelayed({
                     endGame(stage)
                 }, 3*1000)
             }
