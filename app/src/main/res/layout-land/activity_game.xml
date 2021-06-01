@@ -9,8 +9,8 @@
     <fragment
         android:id="@+id/game_frag"
         android:name="com.example.amprojekt.GameFragment"
-        android:layout_width="367dp"
-        android:layout_height="match_parent"
+        android:layout_width="443dp"
+        android:layout_height="410dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

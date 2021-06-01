@@ -45,12 +45,15 @@ class GameFragment : Fragment(){
             view!!.findViewById(R.id.answerDButton))
         timer = view!!.findViewById(R.id.timer)
         if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            var params = view!!.findViewById<LinearLayout>(R.id.buttonHolder).layoutParams
+             var fiftyparams = view!!.findViewById<GameButton>(R.id.removeAnswersButton).layoutParams
+            fiftyparams.height = 120
+            fiftyparams.width = 240
+            view!!.findViewById<GameButton>(R.id.removeAnswersButton).changeTextSize(35f)
             questionText.textSize = 20f
-            params.height = (params.height * 0.5f).toInt()
             buttonArray.forEach {
-                params = it.layoutParams
-                params.height = 50
+               var params = it.layoutParams
+                params.height = (params.height * 0.8f).toInt()
+
             }
         }
         timer.min = 0
