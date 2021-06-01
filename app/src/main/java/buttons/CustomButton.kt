@@ -47,15 +47,4 @@ open class CustomButton(context : Context, attributeSet : AttributeSet) : View(c
         return true
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
-        val height = if (heightMode == MeasureSpec.EXACTLY) {
-            MeasureSpec.getSize(heightMeasureSpec)
-        } else {
-            (1.8f * fontPaint.textSize).toInt()
-        }
-        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), height)
-    }
-
 }

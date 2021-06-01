@@ -43,4 +43,5 @@
         <item>Aleksandra Hamiltona ; Thomasa Jeffersona ; Georga Washingtona ; Benjamina Franklina</item>
 
     </string-array>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
