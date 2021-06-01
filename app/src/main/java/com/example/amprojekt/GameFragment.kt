@@ -44,11 +44,16 @@ class GameFragment : Fragment(){
         buttonArray = arrayOf(view!!.findViewById(R.id.answerAButton), view!!.findViewById(R.id.answerBButton), view!!.findViewById(R.id.answerCButton),
             view!!.findViewById(R.id.answerDButton))
         timer = view!!.findViewById(R.id.timer)
+        val removeAnswersButton = view!!.findViewById<GameButton>(R.id.removeAnswersButton)
+        removeAnswersButton.setOnClickListener {
+            removeAnswers()
+            helpAvailable = false
+            it.setOnClickListener { }
+        }
         if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-             var fiftyparams = view!!.findViewById<GameButton>(R.id.removeAnswersButton).layoutParams
-            fiftyparams.height = 120
-            fiftyparams.width = 240
-            view!!.findViewById<GameButton>(R.id.removeAnswersButton).changeTextSize(35f)
+            removeAnswersButton.layoutParams.height = 120
+            removeAnswersButton.layoutParams.width = 240
+            removeAnswersButton.changeTextSize(35f)
             questionText.textSize = 20f
             buttonArray.forEach {
                var params = it.layoutParams
@@ -91,11 +96,6 @@ class GameFragment : Fragment(){
             }
         }
         buttonArray.forEach { it.setOnClickListener(listener) }
-        view!!.findViewById<GameButton>(R.id.removeAnswersButton).setOnClickListener {
-            removeAnswers()
-            helpAvailable = false
-            it.setOnClickListener { }
-        }
 
         if(savedInstanceState != null) {
             savedInstanceState.apply {
@@ -132,7 +132,13 @@ class GameFragment : Fragment(){
     }
 
     private fun loadStage(nextStage : Boolean) {
-        questionText.text = chosenQuestions[stage]
+        val question = chosenQuestions[stage]
+        if(question.length > 50) {
+            questionText.textSize = 30f
+        } else {
+            questionText.textSize = 40f
+        }
+        questionText.text = question
         if(nextStage) {
             mProgress = timer.max
             shuffleAnswers(chosenAnswers[stage])
