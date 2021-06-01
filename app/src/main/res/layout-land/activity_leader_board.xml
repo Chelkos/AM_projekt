@@ -6,27 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/titleView"
-        android:layout_width="319dp"
-        android:layout_height="37dp"
-        android:text="CURRENT LEADERS"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/highScores"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.351" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/highScores"
-        android:layout_width="469dp"
-        android:layout_height="261dp"
+    <fragment
+        android:id="@+id/leaderboard_frag"
+        android:name="com.example.amprojekt.LeaderboardFragment"
+        android:layout_width="350dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.851" />
+        tools:layout="@layout/fragment_leaderboard" />
 </androidx.constraintlayout.widget.ConstraintLayout>

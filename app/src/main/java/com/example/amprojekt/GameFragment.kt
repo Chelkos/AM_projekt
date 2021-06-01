@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.os.Looper.getMainLooper
 import android.view.LayoutInflater
 import android.view.View
@@ -57,7 +56,7 @@ class GameFragment : Fragment(){
             removeAnswersButton.changeTextSize(35f)
             questionText.textSize = 20f
             buttonArray.forEach {
-               var params = it.layoutParams
+                var params = it.layoutParams
                 params.height = (params.height * 0.8f).toInt()
 
             }

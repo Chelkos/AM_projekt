@@ -25,13 +25,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Player"
+                android:textColor="#BC000000"
                 android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Date" />
+                android:text="Date"
+                android:textColor="#BC000000" />
         </LinearLayout>
 
         <TextView
@@ -41,6 +43,7 @@
             android:layout_weight="1"
             android:text="10"
             android:textAlignment="center"
+            android:textColor="@color/gold"
             android:textSize="30sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
