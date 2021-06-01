@@ -36,8 +36,8 @@
 
     <LinearLayout
         android:id="@+id/buttonHolder"
-        android:layout_width="match_parent"
-        android:layout_height="253dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,51 +48,49 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
 
-            <Button
+            <buttons.GameButton
                 android:id="@+id/answerAButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="180dp"
+                android:layout_height="90dp"
+                android:layout_margin="7dp"
                 android:text="Answer A" />
 
-            <Button
+            <buttons.GameButton
                 android:id="@+id/answerBButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="180dp"
+                android:layout_height="90dp"
+                android:layout_margin="7dp"
                 android:text="Answer B" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="horizontal">
 
-            <Button
+            <buttons.GameButton
                 android:id="@+id/answerCButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="180dp"
+                android:layout_height="90dp"
+                android:layout_margin="7dp"
                 android:text="Answer C" />
 
-            <Button
+            <buttons.GameButton
                 android:id="@+id/answerDButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="180dp"
+                android:layout_height="90dp"
+                android:layout_margin="7dp"
                 android:text="Answer D" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <Button
+    <buttons.GameButton
         android:id="@+id/removeAnswersButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:text="50/50"
         app:layout_constraintBottom_toTopOf="@+id/buttonHolder"
         app:layout_constraintEnd_toEndOf="parent"

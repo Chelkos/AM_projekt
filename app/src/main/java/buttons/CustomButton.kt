@@ -52,4 +52,6 @@ open class CustomButton(context : Context, attributeSet : AttributeSet) : View(c
         invalidate()
     }
 
+    fun getContent() : String = text
+
 }

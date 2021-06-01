@@ -12,6 +12,7 @@ import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.*
 import androidx.fragment.app.Fragment
+import buttons.GameButton
 import java.util.*
 
 class GameFragment : Fragment(){
@@ -21,7 +22,7 @@ class GameFragment : Fragment(){
 
     lateinit var questionText : TextView
     lateinit var messageView : TextView
-    lateinit var buttonArray : Array<Button>
+    lateinit var buttonArray : Array<GameButton>
     lateinit var timer : ProgressBar
     lateinit var questionsIndexes : List<Int>
     lateinit var allQuestions : Array<String>
@@ -30,10 +31,12 @@ class GameFragment : Fragment(){
     lateinit var chosenAnswers : Array<String>
     lateinit var correctAnswer : String
     lateinit var shuffledAnswers : ArrayList<String>
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_game, container, false)
     }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         questionText = view!!.findViewById(R.id.questionText)
@@ -41,32 +44,32 @@ class GameFragment : Fragment(){
         buttonArray = arrayOf(view!!.findViewById(R.id.answerAButton), view!!.findViewById(R.id.answerBButton), view!!.findViewById(R.id.answerCButton),
             view!!.findViewById(R.id.answerDButton))
         timer = view!!.findViewById(R.id.timer)
-        var orientation = getResources().getConfiguration().orientation;
-        if(orientation == Configuration.ORIENTATION_LANDSCAPE)
-        {
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             var params = view!!.findViewById<LinearLayout>(R.id.buttonHolder).layoutParams
             questionText.textSize = 20f
             params.height = (params.height * 0.5f).toInt()
-
+            buttonArray.forEach {
+                params = it.layoutParams
+                params.height = 50
+            }
         }
         timer.min = 0
-        timer.max = GameFragment.TIME_LIMIT.toInt()
+        timer.max = TIME_LIMIT.toInt()
 
         val listener = View.OnClickListener { it ->
-            val button = it as Button
-            val text = button.text
+            val button = it as GameButton
+            val text = button.getContent()
 
             if (text == correctAnswer) {
+                stage++
                 if(stage < 10) {
                     messageView.text = "Dobrze!"
                     Handler(getMainLooper()).postDelayed({
                         messageView.text = ""
                     }, 1*1000)
-                    stage++
                     loadStage(true)
-
-
                 } else {
+                    timer.animation = null
                     messageView.text = "WYGRANA"
                     Handler(getMainLooper()).postDelayed({
                         endGame(10)
@@ -85,12 +88,11 @@ class GameFragment : Fragment(){
             }
         }
         buttonArray.forEach { it.setOnClickListener(listener) }
-        view!!.findViewById<Button>(R.id.removeAnswersButton).setOnClickListener {
+        view!!.findViewById<GameButton>(R.id.removeAnswersButton).setOnClickListener {
             removeAnswers()
             helpAvailable = false
             it.setOnClickListener { }
         }
-
 
         if(savedInstanceState != null) {
             savedInstanceState.apply {
@@ -109,6 +111,7 @@ class GameFragment : Fragment(){
         }
 
     }
+
     private fun shuffleAnswers(answers: String) {
         val words = answers.split(";")
         shuffledAnswers = words as ArrayList<String>
@@ -131,7 +134,7 @@ class GameFragment : Fragment(){
             mProgress = timer.max
             shuffleAnswers(chosenAnswers[stage])
         }
-        buttonArray.forEachIndexed { index, button -> button.text = shuffledAnswers[index] }
+        buttonArray.forEachIndexed { index, button -> button.changeText(shuffledAnswers[index]) }
 
         val anim = object : Animation() {
             private val initProgress = mProgress
@@ -175,8 +178,8 @@ class GameFragment : Fragment(){
             pos[j] = tmp
         }
         for (i in 0..3) {
-            if(buttonArray[pos[i]].text != correctAnswer) {
-                buttonArray[pos[i]].text = ""
+            if(buttonArray[pos[i]].getContent() != correctAnswer) {
+                buttonArray[pos[i]].changeText("")
                 c--
             }
             if(c == 0) break
