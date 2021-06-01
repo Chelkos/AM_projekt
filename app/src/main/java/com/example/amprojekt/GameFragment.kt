@@ -133,10 +133,18 @@ class GameFragment : Fragment(){
 
     private fun loadStage(nextStage : Boolean) {
         val question = chosenQuestions[stage]
-        if(question.length > 50) {
-            questionText.textSize = 30f
+        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            if (question.length > 50) {
+                questionText.textSize = 20f
+            } else {
+                questionText.textSize = 30f
+            }
         } else {
-            questionText.textSize = 40f
+            if (question.length > 50) {
+                questionText.textSize = 30f
+            } else {
+                questionText.textSize = 40f
+            }
         }
         questionText.text = question
         if(nextStage) {
